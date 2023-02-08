@@ -2,6 +2,7 @@
 
 current_date=$(date +%Y-%m-%d__%H:%M:%S)
 logfile=$(pwd)/"$0".log
+env_setup_file=$(pwd)/env_setup.txt
 current_dir=$(pwd)
 
 java --version
@@ -36,41 +37,43 @@ else
   which scala
 fi
 
+#which spark
 
-which spark
 
-if [ $? -ne 0 ]; then
-  cd ~
-  if test -f "spark-3.3.1-bin-hadoop3.tgz"
+if [ -d "/mnt/spark" ]
+then
+  echo "spark's already installed:"
+  echo "/mnt/spark"
+else
+  if test -f ~/"spark-3.3.1-bin-hadoop3.tgz"
   then
     echo "spark's already downloaded"
-    cd $current_dir
   else
+    cd ~
     wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
     tar xvf spark-3.3.1-bin-hadoop3.tgz
     sudo mv spark-3.3.1-bin-hadoop3 /mnt/spark
     cd $current_dir
+    echo "$current_date -- The installation of spark was successful.">>$logfile
   fi
-else
-  echo "spark's already installed:"
-#  which spark
-  echo "-"
 fi
 
 #spark environment
 
 #sudo nano ~/.bashrc
 
-echo "Setup spark environment"
-
-echo "sudo nano ~/.bashrc"
-echo "Add the following to .bashrc"
-
-echo "export SPARK_HOME=/mnt/spark"
-echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin"
-
-echo "start-master.sh"
-echo "stop-master.sh"
+echo "Setup spark environment">$env_setup_file
+echo "------------------">>$env_setup_file
+echo "gedit ~/.profile">>$env_setup_file
+echo "Add the following lines to  end of .bashrc file">>$env_setup_file
+echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64">>$env_setup_file
+echo "export SPARK_HOME=/mnt/spark">>$env_setup_file
+echo "export PATH=\$PATH:\$SPARK_HOME/bin:\$SPARK_HOME/sbin">>$env_setup_file
+echo "--RUNNING----------------">>$env_setup_file
+echo "spark-shell">>$env_setup_file
+echo "pyspark">>$env_setup_file
+#echo "start-master.sh"
+#echo "stop-master.sh"
 
 #sudo apt install curl mlocate git scala -y
 

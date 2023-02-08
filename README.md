@@ -4,6 +4,7 @@
 
 #### Install
 
+* [java jdk](https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-22-04)
 * [spark ubuntu 22.04](https://dev.to/kinyungu_denis/to-install-apache-spark-and-run-pyspark-in-ubuntu-2204-4i79)
 * [spark ubuntu 20.04](https://cloudinfrastructureservices.co.uk/how-to-install-apache-spark-on-ubuntu-20-04/)
 

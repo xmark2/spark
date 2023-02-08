@@ -1,0 +1,10 @@
+Setup spark environment
+------------------
+gedit ~/.profile
+Add the following lines to  end of .bashrc file
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export SPARK_HOME=/mnt/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+--RUNNING----------------
+spark-shell
+pyspark
