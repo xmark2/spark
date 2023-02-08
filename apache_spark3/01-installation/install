@@ -1,0 +1,82 @@
+#!/bin/bash
+
+current_date=$(date +%Y-%m-%d__%H:%M:%S)
+logfile=$(pwd)/"$0".log
+current_dir=$(pwd)
+
+java --version
+
+if [ $? -ne 0 ]; then
+  for package in default-jre openjdk-11-jre-headless;
+  do
+    sudo apt install $package -y
+    echo "$current_date -- The installation of $package was successful.">>$logfile
+    echo "The new command is available here:"
+    which $package
+  done
+
+  java version
+else
+  echo "java's already installed:"
+  which java
+fi
+
+which scala
+
+if [ $? -ne 0 ]; then
+  for package in curl mlocate git scala;
+  do
+    sudo apt install $package -y
+    echo "$current_date -- The installation of $package was successful.">>$logfile
+    echo "The new command is available here:"
+    which $package
+  done
+else
+  echo "scala's already installed:"
+  which scala
+fi
+
+
+which spark
+
+if [ $? -ne 0 ]; then
+  cd ~
+  if test -f "spark-3.3.1-bin-hadoop3.tgz"
+  then
+    echo "spark's already downloaded"
+    cd $current_dir
+  else
+    wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
+    tar xvf spark-3.3.1-bin-hadoop3.tgz
+    sudo mv spark-3.3.1-bin-hadoop3 /mnt/spark
+    cd $current_dir
+  fi
+else
+  echo "spark's already installed:"
+#  which spark
+  echo "-"
+fi
+
+#spark environment
+
+#sudo nano ~/.bashrc
+
+echo "Setup spark environment"
+
+echo "sudo nano ~/.bashrc"
+echo "Add the following to .bashrc"
+
+echo "export SPARK_HOME=/mnt/spark"
+echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin"
+
+echo "start-master.sh"
+echo "stop-master.sh"
+
+#sudo apt install curl mlocate git scala -y
+
+### Remove java jdk
+#sudo apt-get purge openjdk*
+
+### set up JAVA_HOME environment variable
+#sudo update-alternatives --config java
+#sudo nano /etc/environment
