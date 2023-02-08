@@ -1,0 +1,8 @@
+Package    Version
+---------- --------
+findspark  2.0.1
+pip        22.3.1
+py4j       0.10.9.5
+pyspark    3.3.1
+setuptools 65.5.1
+wheel      0.38.4

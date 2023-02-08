@@ -37,8 +37,16 @@ else
   which scala
 fi
 
-#which spark
+which jupyter
 
+if [ $? -ne 0 ]
+then
+    sudo apt  install jupyter-core
+    echo "$current_date -- The installation of jupyter was successful.">>$logfile
+else
+  echo "jupyter's already installed:"
+  which jupyter
+fi
 
 if [ -d "/mnt/spark" ]
 then

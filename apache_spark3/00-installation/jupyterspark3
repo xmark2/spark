@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/PycharmProjects/spark/apache_spark3
+
+jupyter notebook
