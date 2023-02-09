@@ -45,7 +45,15 @@ add the following
 
 * [steps](https://itslinuxfoss.com/install-anaconda-ubuntu-22-04/) 
 
+#### Yarn pyspark
 
+`pyspark --master local[3] --driver-memory 2G`
+
+`pyspark --master yarn --driver-memory 1G --executor-memory 500M --num-executor 2 --executor-cores 1`
+
+#### Zeppelin
+
+* [install Zeppelin ubuntu 18.04](https://www.youtube.com/watch?v=XW0zZCknjiw)
 
 
 ### Spark Workshop
