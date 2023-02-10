@@ -35,6 +35,7 @@ Change template log to conf
 add the following
 
 `spark.driver.extraJavaOptions      -Dlog4j.configuration=file:log4j.properties -Dspark.yarn.app.container.log.dir=app-logs -Dlogfile.name=hello-spark`
+`spark.jars.packages                org.apache.spark:spark-avro_2.11:2.4.5`
 
 #### Databricks
 
@@ -55,6 +56,69 @@ add the following
 
 * [install Zeppelin ubuntu 18.04](https://www.youtube.com/watch?v=XW0zZCknjiw)
 
+#### [DataFrameReader](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameReader.html?highlight=dataframereader)
+
+* General structure
+
+```
+DataFrameReader
+    .format(...)
+    .option("key", "value")
+    .schema(...)
+    .load()
+```
+
+* Example
+
+```
+spark.read
+    .format("csv")
+    .option("header", "true")
+    .option("path", "/data/mycsvfiles/")
+    .option("mode", "FAILFAST")
+    .schema(mySchema)
+    .load()
+```
+
+[Option modes](https://www.coffeeandtips.com/post/differences-between-failfast-permissive-and-dropmalfored-modes-in-dataframes)
+
+* `.option("mode", "PERMISSIVE")`
+* `.option("mode", "DROPMALFORMED")`
+* `.option("mode", "FAILFAST")`
+
+[Spark Data Types](https://spark.apache.org/docs/latest/sql-ref-datatypes.html)
+
+#### [DataFrameWriter](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter)
+
+* General structure
+
+```
+DataFrameWriter
+    .format(...)
+    .mode(...)
+    .option(...)
+    .partitionBy(...)
+    .bucketBy(...)
+    .sortBy(...)
+    .save()
+```
+
+* Example
+
+```
+spark.write
+    .format("parquet")
+    .mode(saveMode)
+    .option("path", "/data/flights/")
+    .save()
+```
+
+#### saveModes
+
+* append
+* overwrite
+* errorIfExists
+* ignore
 
 ### Spark Workshop
 
