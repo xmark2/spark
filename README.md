@@ -120,6 +120,11 @@ spark.write
 * errorIfExists
 * ignore
 
+### Learning Spark 2nd Edition
+
+* https://github.com/databricks/LearningSparkV2
+
+
 ### Spark Workshop
 
 * https://github.com/PacktWorkshops/The-Spark-Workshop
