@@ -1,13 +1,15 @@
-# https://community.cloud.databricks.com
-# login
-# create notebook, name: ExploringColumns
-# run the following in the cells
+# Databricks notebook source
+# MAGIC %fs ls /databricks-datasets/
 
-%fs ls /databricks-datasets/
+# COMMAND ----------
 
-%fs ls /databricks-datasets/airlines/
+# MAGIC %fs ls /databricks-datasets/airlines/
 
-%fs head /databricks-datasets/airlines/part-00000
+# COMMAND ----------
+
+# MAGIC %fs head /databricks-datasets/airlines/part-00000
+
+# COMMAND ----------
 
 airlinesDF = spark.read \
 .format("csv") \
@@ -16,21 +18,27 @@ airlinesDF = spark.read \
 .option("samplingRatio", "0.0001") \
 .load("/databricks-datasets/airlines/part-00000")
 
-
-airlinesDF.select("Origin", "Dest", "Distance" ).show(10)
-
+# COMMAND ----------
 
 from pyspark.sql.functions import *
 airlinesDF.select(column("Origin"), col("Dest"), "Distance").show(10)
 
+# COMMAND ----------
 
 airlinesDF.select("Origin", "Dest", "Distance", "Year","Month","DayofMonth").show(10)
 
+# COMMAND ----------
 
 airlinesDF.selectExpr("Origin", "Dest", "Distance", "to_date(concat(Year,Month,DayofMonth),'yyyyMMdd') as FlightDate").show(10)
 
+# COMMAND ----------
+
 airlinesDF.select("Origin", "Dest", "Distance", expr("to_date(concat(Year,Month,DayofMonth),'yyyyMMdd') as FlightDate")).show(10)
 
+# COMMAND ----------
+
 airlinesDF.select("Origin", "Dest", "Distance", to_date(concat("Year","Month","DayofMonth"),"yyyyMMdd").alias("FlightDate")).show(10)
+
+# COMMAND ----------
 
 
