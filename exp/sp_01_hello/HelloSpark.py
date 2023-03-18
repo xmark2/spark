@@ -1,17 +1,20 @@
 import sys
 from pyspark.sql import SparkSession
-from lib import Log4j, get_spark_app_config, load_survey_df, count_by_country
+from .lib import Log4j, get_spark_app_config, load_survey_df, count_by_country
 
 
-class MySparkApp:
-    def __init__(self, path_conf):
-        conf = get_spark_app_config(path_conf)
+class HelloApp:
+    def __init__(self, logger, spark):
 
-        self.spark = SparkSession.builder \
-            .config(conf=conf) \
-            .getOrCreate()
-
-        self.logger = Log4j(self.spark)
+        self.logger = logger
+        self.spark = spark
+        # conf = get_spark_app_config()
+        #
+        # self.spark = SparkSession.builder \
+        #     .config(conf=conf) \
+        #     .getOrCreate()
+        #
+        # self.logger = Log4j(self.spark)
 
     def check_arg_data(self):
         if len(sys.argv) != 2:
@@ -34,5 +37,5 @@ class MySparkApp:
 
 
 if __name__ == "__main__":
-    myapp = MySparkApp("spark.conf")
+    myapp = MySparkApp()
     myapp.show_count_by_country()

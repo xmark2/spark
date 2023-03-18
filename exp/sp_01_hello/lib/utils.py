@@ -17,7 +17,7 @@ def count_by_country(survey_df):
         .count()
 
 
-def get_spark_app_config(path_conf):
+def get_spark_app_config():
     spark_conf = SparkConf()
     config = configparser.ConfigParser()
     # config.read(path_conf)
