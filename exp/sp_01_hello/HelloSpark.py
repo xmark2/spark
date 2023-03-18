@@ -4,17 +4,16 @@ from .lib import Log4j, get_spark_app_config, load_survey_df, count_by_country
 
 
 class HelloApp:
-    def __init__(self, logger, spark):
 
-        self.logger = logger
-        self.spark = spark
-        # conf = get_spark_app_config()
-        #
-        # self.spark = SparkSession.builder \
-        #     .config(conf=conf) \
-        #     .getOrCreate()
-        #
-        # self.logger = Log4j(self.spark)
+    def __init__(self, path_conf):
+
+        conf = get_spark_app_config(path_conf)
+
+        self.spark = SparkSession.builder \
+            .config(conf=conf) \
+            .getOrCreate()
+
+        self.logger = Log4j(self.spark)
 
     def check_arg_data(self):
         if len(sys.argv) != 2:
@@ -34,8 +33,3 @@ class HelloApp:
 
         self.logger.info("Finished HelloSpark")
         self.spark.stop()
-
-
-if __name__ == "__main__":
-    myapp = MySparkApp()
-    myapp.show_count_by_country()
