@@ -1,12 +1,11 @@
 import sys
-from pyspark.sql import *
-from lib.logger import Log4j
-from lib.utils import *
+from pyspark.sql import SparkSession
+from lib import Log4j, get_spark_app_config, load_survey_df, count_by_country
 
 
 class MySparkApp:
-    def __init__(self):
-        conf = get_spark_app_config()
+    def __init__(self, path_conf):
+        conf = get_spark_app_config(path_conf)
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \
@@ -35,5 +34,5 @@ class MySparkApp:
 
 
 if __name__ == "__main__":
-    myapp = MySparkApp()
+    myapp = MySparkApp("spark.conf")
     myapp.show_count_by_country()
