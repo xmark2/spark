@@ -5,9 +5,10 @@ from .lib import Log4j, get_spark_app_config, load_survey_df
 
 class HelloSQLApp:
 
-    def __init__(self, path_conf):
+    def __init__(self, path_conf, path_data):
 
         conf = get_spark_app_config(path_conf)
+        self.path_data = path_data
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \
@@ -26,7 +27,7 @@ class HelloSQLApp:
 
         self.logger.info("Starting HelloSpark")
 
-        survey_raw_df = load_survey_df(self.spark, sys.argv[1])
+        survey_raw_df = load_survey_df(self.spark, self.path_data)
 
         survey_raw_df.createOrReplaceTempView("survey_tbl")
         count_df = self.spark.sql("select Country, count(1) as count from survey_tbl where Age<40 group by Country")
@@ -44,6 +45,6 @@ class HelloSQLApp:
         self.spark.stop()
 
 
-if __name__ == "__main__":
-    myapp = HelloSQLApp("spark.conf")
-    myapp.show_count_by_country()
+# if __name__ == "__main__":
+#     myapp = HelloSQLApp("spark.conf")
+#     myapp.show_count_by_country()

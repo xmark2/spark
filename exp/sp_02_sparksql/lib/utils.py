@@ -22,6 +22,6 @@ def get_spark_app_config(path_conf):
     config = configparser.ConfigParser()
     config.read(path_conf)
 
-    for (key, val) in config.items("SPARK_APP_CONFIGS"):
+    for (key, val) in config.items("SPARKSQL_APP_CONFIGS"):
         spark_conf.set(key, val)
     return spark_conf
