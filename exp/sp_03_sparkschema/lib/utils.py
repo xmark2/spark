@@ -21,6 +21,9 @@ flightSchemaStruct = StructType([
         StructField("DISTANCE", IntegerType())
     ])
 
+flightSchemaDDL = """FL_DATE DATE, OP_CARRIER STRING, OP_CARRIER_FL_NUM INT, ORIGIN STRING,
+              ORIGIN_CITY_NAME STRING, DEST STRING, DEST_CITY_NAME STRING, CRS_DEP_TIME INT, DEP_TIME INT,
+              WHEELS_ON INT, TAXI_IN INT, CRS_ARR_TIME INT, ARR_TIME INT, CANCELLED INT, DISTANCE INT"""
 
 def load_csv_df(spark, data_file):
     return spark.read \
@@ -32,6 +35,17 @@ def load_csv_df(spark, data_file):
         .load(data_file)
         # .load("data/flight*.csv")
 
+
+def load_json_df(spark, data_file):
+
+    return spark.read \
+        .format("json") \
+        .schema(flightSchemaDDL) \
+        .option("dateFormat", "M/d/y") \
+        .load(data_file)
+
+    # flightTimeJsonDF.show(5)
+    # logger.info("JSON Schema:" + flightTimeJsonDF.schema.simpleString())
 
 # def load_survey_df(spark, data_file):
 #     return spark.read \

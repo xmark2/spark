@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 from .lib import Log4j, get_spark_app_config, load_survey_df
 
 
-class HelloSQLApp:
+class SparkSqlApp:
 
     def __init__(self, path_conf, path_data):
 

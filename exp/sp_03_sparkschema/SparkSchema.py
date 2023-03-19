@@ -1,14 +1,13 @@
 import sys
 from pyspark.sql import SparkSession
-from .lib import Log4j, get_spark_app_config, load_csv_df
+from .lib import Log4j, get_spark_app_config, load_csv_df, load_json_df
 
 
 class SparkSchemaApp:
 
-    def __init__(self, path_conf, path_data):
+    def __init__(self, path_conf):
 
         conf = get_spark_app_config(path_conf)
-        self.path_data = path_data
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \
@@ -21,27 +20,47 @@ class SparkSchemaApp:
             self.logger.error("Usage: HelloSpark <filename>")
             sys.exit(-1)
 
-    def show_data_csv(self):
+    def show_data_csv(self, path_csv):
 
         self.check_arg_data()
 
-        self.logger.info("Starting SparkSchemaApp")
+        self.logger.info("Starting SparkSchemaApp CSV")
 
         # flighttime_csv_df = load_csv_df(self.spark, "data/flight*.csv")
-        flighttime_csv_df = load_csv_df(self.spark, self.path_data)
+        flighttime_df = load_csv_df(self.spark, path_csv)
 
-        flighttime_csv_df.show()
+        flighttime_df.show()
 
-        self.logger.info("CSV Schema:" + flighttime_csv_df.schema.simpleString())
+        self.logger.info("CSV Schema:" + flighttime_df.schema.simpleString())
 
         ## while the code running you can open Spark UI
         ## http://localhost:4040/jobs/
 
         input("Press Enter")
 
-        self.logger.info("Finished SparkSchemaApp")
+        self.logger.info("Finished SparkSchemaApp CSV")
         self.spark.stop()
 
+    def show_data_json(self, path_json):
+
+        self.check_arg_data()
+
+        self.logger.info("Starting SparkSchemaApp JSON")
+
+        # flighttime_csv_df = load_csv_df(self.spark, "data/flight*.csv")
+        flighttime_df = load_json_df(self.spark, path_json)
+
+        flighttime_df.show()
+
+        self.logger.info("JSON Schema:" + flighttime_df.schema.simpleString())
+
+        ## while the code running you can open Spark UI
+        ## http://localhost:4040/jobs/
+
+        input("Press Enter")
+
+        self.logger.info("Finished SparkSchemaApp JSON")
+        self.spark.stop()
 #
 # if __name__ == "__main__":
 #     spark = SparkSession \
