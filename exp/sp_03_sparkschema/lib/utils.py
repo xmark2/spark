@@ -44,6 +44,13 @@ def load_json_df(spark, data_file):
         .option("dateFormat", "M/d/y") \
         .load(data_file)
 
+
+def load_parquet_df(spark, data_file):
+    return spark.read \
+        .format("parquet") \
+        .load(data_file)
+
+
     # flightTimeJsonDF.show(5)
     # logger.info("JSON Schema:" + flightTimeJsonDF.schema.simpleString())
 
