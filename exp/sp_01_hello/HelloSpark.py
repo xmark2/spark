@@ -31,5 +31,12 @@ class HelloApp:
         count_df = count_by_country(partitioned_survey_df)
         count_df.show()
 
+        self.logger.info(count_df.collect())
+
+        ## while the code running you can open Spark UI
+        ## http://localhost:4040/jobs/
+
+        input("Press Enter")
+
         self.logger.info("Finished HelloSpark")
         self.spark.stop()
