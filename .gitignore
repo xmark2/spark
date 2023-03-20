@@ -161,4 +161,6 @@ cython_debug/
 
 *.json.crc
 
+part-*.json
+
 *_SUCCESS*
