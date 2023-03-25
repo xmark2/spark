@@ -1,7 +1,7 @@
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import spark_partition_id, lit
-from lib import Log4j, get_spark_app_config, load_parquet_df
+from .lib import Log4j, get_spark_app_config, load_parquet_df
 
 
 class DataSinkApp:
