@@ -67,6 +67,7 @@ class DataSinkApp:
 
         self.logger.info("start sql")
         df_output = self.spark.sql("select * from flight_data")
+        self.logger.info(f"flight_data schema: {df_output.schema}")
         print(df_output.columns)
         df_output.show()
         self.logger.info("finished sql")
