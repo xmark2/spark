@@ -65,28 +65,6 @@ class SparkSQLDBApp:
         df_output = self.spark.sql(f"select * from {tablename}")
         df_output.show()
 
-    def read_datasink(self, filter_carrier, filter_origin):
-        filter_carrier = 'AA'
-        filter_origin = 'BHM'
-
-        path = f"dataSink/json/OP_CARRIER={filter_carrier}/ORIGIN={filter_origin}/part*"
-
-        df_json = self.spark.read \
-            .format("json") \
-            .option("mode", "FAILFAST") \
-            .load(path) \
-            .withColumn('OP_CARRIER', lit(filter_carrier)) \
-            .withColumn('ORIGIN', lit(filter_origin))
-
-        df_json.createOrReplaceTempView("flight_data")
-
-        self.logger.info("start sql")
-        df_output = self.spark.sql("select * from flight_data")
-        self.logger.info(f"flight_data schema: {df_output.schema}")
-        print(df_output.columns)
-        df_output.show()
-        self.logger.info("finished sql")
-
 
 if __name__ == "__main__":
     myapp = SparkSQLDBApp(path_conf="spark.conf", dbname="AIRLINE_DB")
