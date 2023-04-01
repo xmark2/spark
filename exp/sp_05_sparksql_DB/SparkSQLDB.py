@@ -1,7 +1,7 @@
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import spark_partition_id, lit
-from lib import Log4j, get_spark_app_config, load_parquet_df
+from .lib import Log4j, get_spark_app_config, load_parquet_df
 
 
 class SparkSQLDBApp:
@@ -60,9 +60,9 @@ class SparkSQLDBApp:
     def show_tables(self):
         print(self.spark.catalog.listTables(f"{self.dbname}"))
 
-    def read_sparksql_table(self, tablename):
+    def read_sparksql_table(self, sql_cmd):
 
-        df_output = self.spark.sql(f"select * from {tablename}")
+        df_output = self.spark.sql(f"{sql_cmd}")
         df_output.show()
 
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     myapp = SparkSQLDBApp(path_conf="spark.conf", dbname="AIRLINE_DB")
     # myapp.load_parquet_sparkdb(path_parquet="dataSource/flight*.parquet", tblname="flight_data_tbl")
     myapp.show_tables()
-    myapp.read_sparksql_table(tablename="flight_data_tbl")
+    myapp.read_sparksql_table(sql_cmd="select * from flight_data_tbl")
 
     # myapp = DataSinkApp(path_conf="spark.conf")
     # myapp.read_datasink(filter_origin='BHM', filter_carrier='HP')
