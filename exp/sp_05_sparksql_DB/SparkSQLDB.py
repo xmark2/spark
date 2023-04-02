@@ -41,6 +41,7 @@ class SparkSQLDBApp:
         # self.spark.catalog.setCurrentDatabase(f"{dbname}")
 
         self.logger.info("Parquet Schema:" + flighttime_df.schema.simpleString())
+        self.logger.info(flighttime_df.printSchema())
 
         ## while the code running you can open Spark UI
         ## http://localhost:4040/jobs/

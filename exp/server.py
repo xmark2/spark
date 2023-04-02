@@ -3,6 +3,7 @@ from sp_02_sparksql.HelloSparkSQL import SparkSqlApp
 from sp_03_sparkschema.SparkSchema import SparkSchemaApp
 from sp_04_datasink.DataSink import DataSinkApp
 from sp_05_sparksql_DB.SparkSQLDB import SparkSQLDBApp
+from sp_06_RowDemo.RowDemo import RowApp
 from pathlib import Path
 
 if __name__ == "__main__":
@@ -33,10 +34,18 @@ if __name__ == "__main__":
     # myapp = DataSinkApp(path_conf)
     # myapp.read_datasink(filter_origin='BHM', filter_carrier='HP')
 
-    path_conf = Path().joinpath("sp_05_sparksql_DB", "spark.conf")
-    myapp = SparkSQLDBApp(path_conf, dbname="AIRLINE_DB")
-    myapp.load_parquet_sparkdb(path_parquet="sp_05_sparksql_DB/dataSource/flight*.parquet",
-                               tblname="flight_data_tbl")
+    # path_conf = Path().joinpath("sp_05_sparksql_DB", "spark.conf")
+    # myapp = SparkSQLDBApp(path_conf, dbname="AIRLINE_DB")
+    # myapp.load_parquet_sparkdb(path_parquet="sp_05_sparksql_DB/dataSource/flight*.parquet",
+    #                            tblname="flight_data_tbl")
+    #
+    # myapp = SparkSQLDBApp(path_conf, dbname="AIRLINE_DB")
+    # myapp.read_sparksql_table(sql_cmd="select * from flight_data_tbl")
 
-    myapp = SparkSQLDBApp(path_conf, dbname="AIRLINE_DB")
-    myapp.read_sparksql_table(sql_cmd="select * from flight_data_tbl")
+    path_conf = Path().joinpath("sp_06_RowDemo", "spark.conf")
+    myapp = RowApp(path_conf)
+    myapp.get_row_df().printSchema()
+    myapp.get_row_df().show()
+
+    myapp.get_row_df_todate().printSchema()
+    myapp.get_row_df_todate().show()
