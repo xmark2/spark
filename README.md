@@ -35,7 +35,7 @@ Change template log to conf
 add the following
 
 `spark.driver.extraJavaOptions      -Dlog4j.configuration=file:log4j.properties -Dspark.yarn.app.container.log.dir=app-logs -Dlogfile.name=hello-spark`
-`spark.jars.packages                org.apache.spark:spark-avro_2.11:2.4.5`
+`spark.jars.packages                org.apache.spark:spark-avro_2.12:3.5.1`
 
 #### Databricks
 

@@ -5,6 +5,10 @@ Add the following lines to  end of .bashrc file
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export SPARK_HOME=/mnt/spark
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+export PYSPARK_PYTHON=//home/ubuntu/PycharmProjects/spark/venv/bin/python3
+export PYSPARK_DRIVER_PYTHON='jupyter'
+export PYSPARK_DRIVER_PYTHON_OPTS='notebook --no-browser --port=8889'
+export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
 --RUNNING----------------
 spark-shell
 pyspark

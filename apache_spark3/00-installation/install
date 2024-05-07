@@ -53,14 +53,14 @@ then
   echo "spark's already installed:"
   echo "/mnt/spark"
 else
-  if test -f ~/"spark-3.3.1-bin-hadoop3.tgz"
+  if test -f ~/"spark-3.5.1-bin-hadoop3.tgz"
   then
     echo "spark's already downloaded"
   else
     cd ~
-    wget https://dlcdn.apache.org/spark/spark-3.3.1/spark-3.3.1-bin-hadoop3.tgz
-    tar xvf spark-3.3.1-bin-hadoop3.tgz
-    sudo mv spark-3.3.1-bin-hadoop3 /mnt/spark
+    wget https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
+    tar xvf spark-3.5.1-bin-hadoop3.tgz
+    sudo mv spark-3.5.1-bin-hadoop3 /mnt/spark
     cd $current_dir
     echo "$current_date -- The installation of spark was successful.">>$logfile
   fi

@@ -14,8 +14,8 @@ if __name__ == "__main__":
 
     logger.info("Starting HelloSpark")
     # Your processing code
-    # conf_out = spark.sparkContext.getConf()
-    # logger.info(conf_out.toDebugString())
+    conf_out = spark.sparkContext.getConf()
+    logger.info(conf_out.toDebugString())
 
     # https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameReader.csv.html?highlight=csv
     survey_df = load_survey_df(spark, sys.argv[1])
@@ -24,6 +24,7 @@ if __name__ == "__main__":
     partitioned_survey_df = survey_df.repartition(2)
 
     count_df = count_by_country(partitioned_survey_df)
+    count_df.show()
 
     logger.info(count_df.collect())
 

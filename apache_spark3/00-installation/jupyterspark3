@@ -4,6 +4,7 @@ cd ~/PycharmProjects/spark/apache_spark3
 
 export PATH="/home/ubuntu/anaconda3/bin:$PATH"
 
-jupyter notebook
+#jupyter notebook
 
+jupyter lab
 #/usr/bin/python3.10
