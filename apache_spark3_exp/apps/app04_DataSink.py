@@ -6,9 +6,9 @@ from apache_spark3_exp.apps.lib import Log4j, get_spark_app_config, load_parquet
 
 class DataSinkApp:
 
-    def __init__(self, path_conf):
+    def __init__(self, path_conf, app_id):
 
-        conf = get_spark_app_config(path_conf)
+        conf = get_spark_app_config(path_conf, app_id)
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \
@@ -50,9 +50,9 @@ class DataSinkApp:
         self.logger.info("Finished DataSinkApp to read Parquet")
         self.spark.stop()
 
-    def read_datasink(self, filter_carrier, filter_origin):
-        filter_carrier = 'AA'
-        filter_origin = 'BHM'
+    def read_data_sink(self, filter_carrier, filter_origin):
+        # filter_carrier = 'AA'
+        # filter_origin = 'BHM'
 
         path = f"dataSink/json/OP_CARRIER={filter_carrier}/ORIGIN={filter_origin}/part*"
 

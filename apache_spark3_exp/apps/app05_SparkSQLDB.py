@@ -1,13 +1,13 @@
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import spark_partition_id, lit
-from apache_spark3_exp.sp_05_sparksql_DB.lib import Log4j, get_spark_app_config, load_parquet_df
+from apache_spark3_exp.apps.lib import Log4j, get_spark_app_config, load_parquet_df
 
 
 class SparkSQLDBApp:
 
-    def __init__(self, path_conf, dbname):
-        conf = get_spark_app_config(path_conf)
+    def __init__(self, path_conf, app_id, dbname):
+        conf = get_spark_app_config(path_conf, app_id)
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \

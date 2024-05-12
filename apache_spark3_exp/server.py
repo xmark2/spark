@@ -1,48 +1,76 @@
-from apache_spark3_exp.apps import HelloApp, SparkSqlApp, SparkSchemaApp
+from apache_spark3_exp.apps import HelloApp, SparkSqlApp, SparkSchemaApp, DataSinkApp, SparkSQLDBApp, RowApp
 from pathlib import Path
 
 path_conf = Path().joinpath("spark.conf")
 
 
-class SparkRunner:
-    def __init__(self):
-        self.app1 = HelloApp(path_conf=path_conf, app_id='01')
+def execute(run_id=None):
+    if not run_id:
+        return
 
+    if '01' in run_id:
+        app1 = HelloApp(path_conf=path_conf, app_id='01')
+        app1.show_count_by_country()
+
+    if '02' in run_id:
         path_data = Path().joinpath("data/sample.csv")
-        self.app2 = SparkSqlApp(path_conf=path_conf, app_id='02', path_data=str(path_data))
+        app2 = SparkSqlApp(path_conf=path_conf, app_id='02', path_data=str(path_data))
+        app2.show_count_by_country()
 
-        self.app3 = SparkSchemaApp(path_conf=path_conf, app_id='03')
+    if '03csv' in run_id:
+        path_csv_data = Path().joinpath("data/flight*.csv")
+        app3 = SparkSchemaApp(path_conf=path_conf, app_id='03')
+        app3.show_data_csv(str(path_csv_data))
 
-    def execute(self, run_id='Default'):
-        if run_id == 'Default':
-            return
+    if '03json' in run_id:
+        path_json_data = Path().joinpath("data/flight*.json")
+        app3 = SparkSchemaApp(path_conf=path_conf, app_id='03')
+        app3.show_data_json(str(path_json_data))
 
-        if run_id == '01':
-            self.app1.show_count_by_country()
+    if '03par' in run_id:
+        path_parquet_data = Path().joinpath("data/flight*.parquet")
+        app3 = SparkSchemaApp(path_conf=path_conf, app_id='03')
+        app3.show_data_parquet(str(path_parquet_data))
 
-        if run_id == '02':
-            self.app2.show_count_by_country()
+    if '04sink' in run_id:
+        app4 = DataSinkApp(path_conf=path_conf, app_id='04')
+        app4.get_datasink(path_parquet="data/flight*.parquet")
 
-        if run_id == '03csv':
-            path_csv_data = Path().joinpath("data/flight*.csv")
-            self.app3.show_data_csv(str(path_csv_data))
+    if '04read' in run_id:
+        app4 = DataSinkApp(path_conf=path_conf, app_id='04')
+        app4.read_data_sink(filter_carrier='AA', filter_origin='BHM')
 
-        if run_id == '03json':
-            path_json_data = Path().joinpath("data/flight*.json")
-            self.app3.show_data_json(str(path_json_data))
+    if '05sql_db' in run_id:
+        app5 = SparkSQLDBApp(path_conf=path_conf, app_id='05', dbname="AIRLINE_DB")
+        app5.load_parquet_sparkdb(path_parquet="data/flight*.parquet",
+                                  tblname="flight_data_tbl")
 
-        if run_id == '03par':
-            path_parquet_data = Path().joinpath("data/flight*.parquet")
-            self.app3.show_data_parquet(str(path_parquet_data))
+    if '05sql_read' in run_id:
+        app5 = SparkSQLDBApp(path_conf=path_conf, app_id='05', dbname="AIRLINE_DB")
+        app5.read_sparksql_table(sql_cmd="select * from flight_data_tbl")
+
+    if '06row' in run_id:
+        app6 = RowApp(path_conf=path_conf, app_id='06')
+        app6.get_row_df().printSchema()
+        app6.get_row_df().show()
+
+        app6.get_row_df_todate().printSchema()
+        app6.get_row_df_todate().show()
 
 
 if __name__ == "__main__":
+    execute(run_id=[
+        # '01', '02', '03csv', '03json', '03par'
+        # '04sink'
+        # '04read'
+        # '05sql_db'
+        # '05sql_read'
+        '06row'
+    ])
 
-    SparkRunner().execute(run_id='03json')
     # exec_app1()
     # exec_app2()
     # exec_app3_csv()
-
 
     # path_conf = Path().joinpath("sp_04_datasink", "spark.conf")
     # myapp = DataSinkApp(path_conf)

@@ -4,7 +4,7 @@ from pyspark.sql.types import *
 
 import sys
 from pyspark.sql import SparkSession
-from apache_spark3_exp.sp_06_RowDemo.lib import Log4j, get_spark_app_config
+from apache_spark3_exp.apps.lib import Log4j, get_spark_app_config
 
 
 # load_survey_df, count_by_country
@@ -16,8 +16,8 @@ def to_date_df(df, fmt, fld):
 
 class RowApp:
 
-    def __init__(self, path_conf):
-        conf = get_spark_app_config(path_conf)
+    def __init__(self, path_conf, app_id):
+        conf = get_spark_app_config(path_conf, app_id)
 
         self.spark = SparkSession.builder \
             .config(conf=conf) \
