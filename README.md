@@ -128,3 +128,7 @@ spark.write
 ### Spark Workshop
 
 * https://github.com/PacktWorkshops/The-Spark-Workshop
+
+### Scala IDE
+
+https://www.geeksforgeeks.org/how-to-install-scala-with-vscode/
